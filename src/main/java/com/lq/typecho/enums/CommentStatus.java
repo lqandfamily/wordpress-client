@@ -18,7 +18,7 @@ public enum CommentStatus {
     /**
      * 仅允许注册用户评论
      */
-    REGISTERED_ONLY("registered_only"),
+//    REGISTERED_ONLY("registered_only"),
     ;
 
     public final String status;

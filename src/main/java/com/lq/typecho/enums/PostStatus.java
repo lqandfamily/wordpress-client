@@ -15,11 +15,18 @@ public enum PostStatus {
     /**
      * 待审核
      */
-    PENDING("pending"),
+    WAITING("waiting"),
+
+
+    /**
+     * 新增save
+     */
+    SAVE("save"),
+
     /**
      * 草稿
      */
-    DRAFT("draft"),
+//    DRAFT("draft"),
     /**
      * 自动草稿
      */
@@ -27,7 +34,7 @@ public enum PostStatus {
     /**
      * 定时
      */
-    FUTURE("future"),
+//    FUTURE("future"),
     /**
      * 私有的
      */
@@ -35,11 +42,11 @@ public enum PostStatus {
     /**
      * 继承，子页面继承父级页面属性
      */
-    INHERIT("inherit"),
+//    INHERIT("inherit"),
     /**
      * 垃圾箱
      */
-    TRASH("trash"),
+//    TRASH("trash"),
     ;
 
     public final String status;

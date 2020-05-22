@@ -1379,6 +1379,7 @@ class Widget_XmlRpc extends Widget_Abstract_Contents implements Widget_Interface
         
         $input['title'] = trim($content['title']) == NULL ? _t('未命名文档') : $content['title'];
 
+        //未实现
         if (isset($content['slug'])) {
             $input['slug'] = $content['slug'];
         } else if (isset($content['wp_slug'])) {
@@ -1386,52 +1387,57 @@ class Widget_XmlRpc extends Widget_Abstract_Contents implements Widget_Interface
             $input['slug'] = $content['wp_slug'];
         }
 
-        $input['text'] = !empty($content['mt_text_more']) ? $content['description'] 
+        $input['text'] = !empty($content['mt_text_more']) ? $content['description']
             . "\n<!--more-->\n" . $content['mt_text_more'] : $content['description'];
         $input['text'] = $this->pluginHandle()->textFilter($input['text'], $this); 
         
         $input['password'] = isset($content["wp_password"]) ? $content["wp_password"] : NULL;
+
+        //未实现
         $input['order'] = isset($content["wp_page_order"]) ? $content["wp_page_order"] : NULL;
 
         $input['tags'] = isset($content['mt_keywords']) ? $content['mt_keywords'] : NULL;
+
         $input['category'] = array();
 
         if (isset($content['postId'])) {
             $input['cid'] = $content['postId'];
         }
-        
+
+        //未实现
         if ('page' == $type && isset($content['wp_page_template'])) {
             $input['template'] = $content['wp_page_template'];
         }
 
         if (isset($content['dateCreated'])) {
             /** 解决客户端与服务器端时间偏移 */
-            $input['created'] = $content['dateCreated']->getTimestamp() - $this->options->timezone + $this->options->serverTimezone;
+                $input['created'] = $content['dateCreated']->getTimestamp() - $this->options->timezone + $this->options->serverTimezone;
         }
 
-        if (!empty($content['categories']) && is_array($content['categories'])) {
-            foreach ($content['categories'] as $category) {
-                if (!$this->db->fetchRow($this->db->select('mid')
-                ->from('table.metas')->where('type = ? AND name = ?', 'category', $category))) {
-                    $result = $this->wpNewCategory($blogId, $userName, $password, array('name' => $category));
-                    if (true !== $result) {
-                        return $result;
-                    }
-                }
+//         if (!empty($content['categories']) && is_array($content['categories'])) {
+//             foreach ($content['categories'] as $category) {
+//                 if (!$this->db->fetchRow($this->db->select('mid')
+//                 ->from('table.metas')->where('type = ? AND name = ?', 'category', $category))) {
+//                     $result = $this->wpNewCategory($blogId, $userName, $password, array('name' => $category));
+//                     if (true !== $result) {
+//                         return $result;
+//                     }
+//                 }
+//
+//                 $input['category'][] = $this->db->fetchObject($this->db->select('mid')
+//                 ->from('table.metas')->where('type = ? AND name = ?', 'category', $category)
+//                 ->limit(1))->mid;
+//             }
+//         }
 
-                $input['category'][] = $this->db->fetchObject($this->db->select('mid')
-                ->from('table.metas')->where('type = ? AND name = ?', 'category', $category)
-                ->limit(1))->mid;
-            }
-        }
-
-        $input['allowComment'] = (isset($content['mt_allow_comments']) && (1 == $content['mt_allow_comments']
-        || 'open' == $content['mt_allow_comments'])) ? 1 : ((isset($content['mt_allow_comments']) && (0 == $content['mt_allow_comments']
-        || 'closed' == $content['mt_allow_comments'])) ? 0 : $this->options->defaultAllowComment);
-
-        $input['allowPing'] = (isset($content['mt_allow_pings']) && (1 == $content['mt_allow_pings']
-        || 'open' == $content['mt_allow_pings'])) ? 1 : ((isset($content['mt_allow_pings']) && (0 == $content['mt_allow_pings']
-        || 'closed' == $content['mt_allow_pings'])) ? 0 : $this->options->defaultAllowPing);
+//         $input['allowComment'] = (isset($content['mt_allow_comments']) && (1 == $content['mt_allow_comments']
+//         || 'open' == $content['mt_allow_comments'])) ? 1 : ((isset($content['mt_allow_comments']) && (0 == $content['mt_allow_comments']
+//         || 'closed' == $content['mt_allow_comments'])) ? 0 : $this->options->defaultAllowComment);
+//
+//
+//         $input['allowPing'] = (isset($content['mt_allow_pings']) && (1 == $content['mt_allow_pings']
+//         || 'open' == $content['mt_allow_pings'])) ? 1 : ((isset($content['mt_allow_pings']) && (0 == $content['mt_allow_pings']
+//         || 'closed' == $content['mt_allow_pings'])) ? 0 : $this->options->defaultAllowPing);
 
         $input['allowFeed'] = $this->options->defaultAllowFeed;
         $input['do'] = $publish ? 'publish' : 'save';

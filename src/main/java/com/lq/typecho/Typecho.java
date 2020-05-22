@@ -3,6 +3,7 @@ package com.lq.typecho;
 import com.lq.typecho.exception.WPClientException;
 import com.lq.typecho.model.request.PostFilter;
 import com.lq.typecho.model.request.PostRequest;
+import com.lq.typecho.model.request.TypechoPostRequest;
 import com.lq.typecho.model.response.Author;
 import com.lq.typecho.model.response.Post;
 import com.lq.typecho.model.response.UserBlog;
@@ -93,7 +94,7 @@ public final class Typecho {
     }
 
 
-    public int newPost(PostRequest post) {
+    public int newPost(TypechoPostRequest post) {
         try {
             return client.newPost(post);
         } catch (Exception e) {

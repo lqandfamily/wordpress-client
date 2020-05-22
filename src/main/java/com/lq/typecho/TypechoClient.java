@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.lq.typecho.exception.WPClientException;
 import com.lq.typecho.model.request.PostFilter;
 import com.lq.typecho.model.request.PostRequest;
+import com.lq.typecho.model.request.TypechoPostRequest;
 import com.lq.typecho.model.response.Author;
 import com.lq.typecho.model.response.Post;
 import com.lq.typecho.model.response.UserBlog;
@@ -72,9 +73,18 @@ class TypechoClient {
     }
 
 
-    int newPost(PostRequest post) throws XmlRpcException, IOException {
-        Object[] params = new Object[]{config.getBlogId(), config.getUsername(), config.getPassword(), post.toMap()};
-        int postId = execute("wp.metaWeblog", params, Integer.class);
+    /**
+     * 修改
+     *
+     * @param post p
+     * @return r
+     * @throws XmlRpcException e
+     * @throws IOException     e
+     */
+    int newPost(TypechoPostRequest post) throws XmlRpcException, IOException {
+        System.out.println(post.toMap().toString());
+        Object[] params = new Object[]{config.getBlogId(), config.getUsername(), config.getPassword(), post.toMap(), true};
+        int postId = execute("metaWeblog.newPost", params, Integer.class);
         return postId;
     }
 
@@ -139,7 +149,9 @@ class TypechoClient {
 
 
     private String execute(String methodName, Object[] params) throws XmlRpcException, JsonProcessingException {
+
         Object obj = client.execute(methodName, params);
+
         return JsonKit.toJson(obj);
     }
 
