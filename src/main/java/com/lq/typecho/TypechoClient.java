@@ -3,11 +3,11 @@ package com.lq.typecho;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.lq.typecho.exception.WPClientException;
-import com.lq.typecho.model.request.PostFilter;
 import com.lq.typecho.model.request.PostRequest;
 import com.lq.typecho.model.request.TypechoPostRequest;
 import com.lq.typecho.model.response.Author;
 import com.lq.typecho.model.response.Post;
+import com.lq.typecho.model.response.TypechoUserBlog;
 import com.lq.typecho.model.response.UserBlog;
 import com.lq.typecho.tools.JsonKit;
 import org.apache.xmlrpc.XmlRpcException;
@@ -100,16 +100,9 @@ class TypechoClient {
     }
 
 
-    List<Post> getPosts(PostFilter filter, String... fields) throws XmlRpcException, IOException {
-        ArrayList<Object> params = new ArrayList<>(5);
-        params.addAll(Arrays.asList(config.getBlogId(), config.getUsername(), config.getPassword()));
-        if (null != filter) {
-            params.add(filter.toMap());
-        }
-        if (null != fields && fields.length > 0) {
-            params.add(fields);
-        }
-        List<Post> posts = execute("wp.getPosts", params.toArray(), new TypeReference<List<Post>>() {
+    List<TypechoUserBlog> getRecentPosts(int count) throws XmlRpcException, IOException {
+        Object[] params = {config.getBlogId(), config.getUsername(), config.getPassword(), count};
+        List<TypechoUserBlog> posts = execute("metaWeblog.getRecentPosts", params, new TypeReference<List<TypechoUserBlog>>() {
         });
         return posts;
     }

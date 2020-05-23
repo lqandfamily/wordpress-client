@@ -1571,7 +1571,7 @@ class Widget_XmlRpc extends Widget_Abstract_Contents implements Widget_Interface
      * @access public
      * @return postStructs
      */
-    public function mwGetRecentPosts($blogId, $userName, $password, $postsNum)
+        public function mwGetRecentPosts($blogId, $userName, $password, $postsNum)
     {
         if (!$this->checkAccess($userName, $password)) {
             return $this->error;
@@ -2273,7 +2273,7 @@ EOF;
             $api = array(
                 /** WordPress API */
                 'wp.getPage'                => array($this, 'wpGetPage'),
-                'wp.getPages'               => array($this, 'wpGetPages'),
+                'wp.'               => array($this, 'wpGetPages'),
                 'wp.newPage'                => array($this, 'wpNewPage'),
                 'wp.deletePage'             => array($this, 'wpDeletePage'),
                 'wp.editPage'               => array($this, 'wpEditPage'),
@@ -2308,14 +2308,14 @@ EOF;
                 'wp.getMediaItem'           => array($this, 'wpGetMediaItem'),
                 'wp.editPost'               => array($this, 'wpEditPost'),
 
-                /** Blogger API */
-                'blogger.getUsersBlogs'     => array($this, 'bloggerGetUsersBlogs'),
-                'blogger.getUserInfo'       => array($this, 'bloggerGetUserInfo'),
-                'blogger.getPost'           => array($this, 'bloggerGetPost'),
-                'blogger.getRecentPosts'    => array($this, 'bloggerGetRecentPosts'),
-                'blogger.getTemplate'       => array($this, 'bloggerGetTemplate'),
-                'blogger.setTemplate'       => array($this, 'bloggerSetTemplate'),
-                'blogger.deletePost'        => array($this, 'bloggerDeletePost'),
+//                 /** Blogger API */
+//                 'blogger.getUsersBlogs'     => array($this, 'bloggerGetUsersBlogs'),
+//                 'blogger.getUserInfo'       => array($this, 'bloggerGetUserInfo'),
+//                 'blogger.getPost'           => array($this, 'bloggerGetPost'),
+//                 'blogger.getRecentPosts'    => array($this, 'bloggerGetRecentPosts'),
+//                 'blogger.getTemplate'       => array($this, 'bloggerGetTemplate'),
+//                 'blogger.setTemplate'       => array($this, 'bloggerSetTemplate'),
+//                 'blogger.deletePost'        => array($this, 'bloggerDeletePost'),
 
                 /** MetaWeblog API (with MT extensions to structs) */
                 'metaWeblog.newPost'        => array($this, 'mwNewPost'),
@@ -2331,12 +2331,12 @@ EOF;
                 'metaWeblog.setTemplate'    => array($this, 'bloggerSetTemplate'),
                 'metaWeblog.getUsersBlogs'  => array($this, 'bloggerGetUsersBlogs'),
 
-                /** MovableType API */
-                'mt.getCategoryList'        => array($this, 'mtGetCategoryList'),
-                'mt.getRecentPostTitles'    => array($this, 'mtGetRecentPostTitles'),
-                'mt.getPostCategories'      => array($this, 'mtGetPostCategories'),
-                'mt.setPostCategories'      => array($this, 'mtSetPostCategories'),
-                'mt.publishPost'            => array($this, 'mtPublishPost'),
+//                 /** MovableType API */
+//                 'mt.getCategoryList'        => array($this, 'mtGetCategoryList'),
+//                 'mt.getRecentPostTitles'    => array($this, 'mtGetRecentPostTitles'),
+//                 'mt.getPostCategories'      => array($this, 'mtGetPostCategories'),
+//                 'mt.setPostCategories'      => array($this, 'mtSetPostCategories'),
+//                 'mt.publishPost'            => array($this, 'mtPublishPost'),
 
                 /** PingBack */
                 'pingback.ping'             => array($this,'pingbackPing'),

@@ -1,11 +1,11 @@
 package com.lq.typecho;
 
 import com.lq.typecho.exception.WPClientException;
-import com.lq.typecho.model.request.PostFilter;
 import com.lq.typecho.model.request.PostRequest;
 import com.lq.typecho.model.request.TypechoPostRequest;
 import com.lq.typecho.model.response.Author;
 import com.lq.typecho.model.response.Post;
+import com.lq.typecho.model.response.TypechoUserBlog;
 import com.lq.typecho.model.response.UserBlog;
 
 import java.util.List;
@@ -76,9 +76,9 @@ public final class Typecho {
     }
 
 
-    public List<Post> getPosts(PostFilter filter, String... fields) {
+    public List<TypechoUserBlog> getRecentPosts(int count) {
         try {
-            return client.getPosts(filter, fields);
+            return client.getRecentPosts(count);
         } catch (Exception e) {
             throw new WPClientException("Error in getting posts.", e);
         }
