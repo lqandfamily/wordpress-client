@@ -3,10 +3,9 @@ package com.lq.typecho;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.lq.typecho.exception.WPClientException;
-import com.lq.typecho.model.request.PostRequest;
 import com.lq.typecho.model.request.TypechoPostRequest;
 import com.lq.typecho.model.response.Author;
-import com.lq.typecho.model.response.Post;
+import com.lq.typecho.model.response.TypechoPost;
 import com.lq.typecho.model.response.TypechoUserBlog;
 import com.lq.typecho.model.response.UserBlog;
 import com.lq.typecho.tools.JsonKit;
@@ -20,8 +19,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -60,16 +57,24 @@ class TypechoClient {
 
 
     boolean deletePost(int postId) throws XmlRpcException, IOException {
-        Object[] params = new Object[]{config.getBlogId(), config.getUsername(), config.getPassword(), postId};
-        boolean result = execute("wp.deletePost", params, Boolean.class);
-        return result;
+        //todo，这个最后一个参数啥意思
+        Object[] params = {config.getBlogId(), postId, config.getUsername(), config.getPassword(), true};
+        try {
+            execute("metaWeblog.deletePost", params, Boolean.class);
+            return true;
+        } catch (org.apache.xmlrpc.XmlRpcException e) {
+            return false;
+        }
     }
 
 
-    boolean editPost(int postId, PostRequest post) throws XmlRpcException, IOException {
-        Object[] params = new Object[]{config.getBlogId(), config.getUsername(), config.getPassword(), postId, post.toMap()};
-        boolean result = execute("wp.editPost", params, Boolean.class);
-        return result;
+    int editPost(int postId, TypechoPostRequest post) throws XmlRpcException, IOException {
+        Object[] params = new Object[]{postId, config.getUsername(), config.getPassword(), post.toMap()};
+        try {
+            return execute("metaWeblog.editPost", params, Integer.class);
+        } catch (org.apache.xmlrpc.XmlRpcException e) {
+            return 0;
+        }
     }
 
 
@@ -89,14 +94,18 @@ class TypechoClient {
     }
 
 
-    Post getPost(int postId, String... fields) throws XmlRpcException, IOException {
-        ArrayList<Object> params = new ArrayList<>(5);
-        params.addAll(Arrays.asList(config.getBlogId(), config.getUsername(), config.getPassword(), postId));
-        if (null != fields && fields.length > 0) {
-            params.add(fields);
+    TypechoPost getPost(int postId, String... fields) throws XmlRpcException, IOException {
+//        ArrayList<Object> params = new ArrayList<>(5);
+        Object[] params = {postId, config.getUsername(), config.getPassword()};
+//        params.addAll(Arrays.asList(config.getBlogId(), config.getUsername(), config.getPassword(), postId));
+//        if (null != fields && fields.length > 0) {
+//            params.add(fields);
+//        }
+        try {
+            return execute("metaWeblog.getPost", params, TypechoPost.class);
+        } catch (org.apache.xmlrpc.XmlRpcException e) {
+            return null;
         }
-        Post post = execute("wp.getPost", params.toArray(), Post.class);
-        return post;
     }
 
 

@@ -1,10 +1,9 @@
 package com.lq.typecho;
 
 import com.lq.typecho.exception.WPClientException;
-import com.lq.typecho.model.request.PostRequest;
 import com.lq.typecho.model.request.TypechoPostRequest;
 import com.lq.typecho.model.response.Author;
-import com.lq.typecho.model.response.Post;
+import com.lq.typecho.model.response.TypechoPost;
 import com.lq.typecho.model.response.TypechoUserBlog;
 import com.lq.typecho.model.response.UserBlog;
 
@@ -85,7 +84,7 @@ public final class Typecho {
     }
 
 
-    public Post getPost(int postId, String... fields) {
+    public TypechoPost getPost(int postId, String... fields) {
         try {
             return client.getPost(postId, fields);
         } catch (Exception e) {
@@ -103,7 +102,7 @@ public final class Typecho {
     }
 
 
-    public boolean editPost(int postId, PostRequest post) {
+    public int editPost(int postId, TypechoPostRequest post) {
         try {
             return client.editPost(postId, post);
         } catch (Exception e) {
